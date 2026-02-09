@@ -1,0 +1,147 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+  // role Role @default(USER) 
+  blog     Blog[]
+}
+
+// enum Role {
+//   USER
+//   ADMIN
+// }
+
+model TourPricing {
+  id            Int   @id @default(autoincrement())
+  numPersons    Int
+  subTotalPrice Int
+  tour          Tour? @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  tourId        Int?
+}
+
+model TourItinerary {
+  id          Int    @id @default(autoincrement())
+  dayNumber   Int
+  title       String
+  description String
+  tour        Tour?  @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  tourId      Int?
+}
+
+model Tour {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  image_url   String
+  information String[]
+  isGuided    Boolean
+  isOpenGroup Boolean
+  minAge      Int
+  maxAge      Int?
+
+  wisatas         WisatasOnTours[]
+  tourPricings    TourPricing[]
+  tourItineraries TourItinerary[]
+
+  client Client?
+}
+
+model Wisata {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  image_url   String
+
+  tours WisatasOnTours[]
+}
+
+// Many to Many relation tour dengan wisata
+model WisatasOnTours {
+  wisata     Wisata   @relation(fields: [wisataId], references: [id], onDelete: Cascade)
+  wisataId   Int
+  tour       Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  tourId     Int
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([wisataId, tourId])
+}
+
+enum CarColors {
+  Merah
+  Biru
+  Hitam
+  Putih
+  Kuning
+  Silver
+}
+
+enum CarTransmission {
+  Manual
+  Automatic
+  CVT
+  DCT
+  AMT
+  Tiptronic
+  DirectDrive
+}
+
+model Car {
+  id           Int             @id @default(autoincrement())
+  name         String
+  image_url    String
+  seats        Int
+  status       Boolean
+  color        CarColors
+  transmission CarTransmission
+}
+
+enum BlogTags {
+  Konco
+  Alam
+  Budaya
+  Kuliner
+  Sejarah
+}
+
+model Blog {
+  id          String   @id @default(uuid())
+  title       String
+  body        String
+  readingTime Int
+  image_url   String
+  tag         String
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Client {
+  id       String  @id @default(uuid())
+  name     String
+  email    String
+  phone    String
+  date     String
+  location String
+  info     String?
+
+  tour   Tour @relation(fields: [tourId], references: [id])
+  tourId Int  @unique
+}
