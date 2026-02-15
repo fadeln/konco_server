@@ -20,7 +20,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://konco-client.vercel.app",
+    origin: "https://koncohiling.vercel.app",
     credentials: true,
   })
 );
@@ -42,7 +42,3 @@ app.use("/api/wisata", wisataRouter);
 app.listen(port, () => {
   console.log(`Server is running on ${port} `);
 });
-
-//ha
-
-//postgresql://postgres.fgdpijdypiqtzbcolhqu:gByZwhRN9hXkskX4@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true
