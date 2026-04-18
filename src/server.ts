@@ -19,7 +19,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173","https://konco-client.vercel.app"],
+    origin: ["http://localhost:5173","https://koncohiling.vercel.app"],
     credentials: true,
   }),
 );
