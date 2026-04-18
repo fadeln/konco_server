@@ -1,10 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../config/prisma";
 import { access_jwt_secret } from "../../config/db.config";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { AuthRequest } from "types/types";
-
-const prisma = new PrismaClient();
+import { AuthRequest } from "../../types/types";
 
 export const createBlog = async (req: AuthRequest, res: Response) => {
   const { title, body, image_url, tag, readingTime } = req.body;

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { access_jwt_secret } from "../config/db.config";
-import { AuthRequest } from "types/types";
+import { AuthRequest } from "../types/types";
 
 export function verifyJwt(req: AuthRequest, res: Response, next: NextFunction) {
   const token = req.headers.authorization?.split(" ")[1];

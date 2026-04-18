@@ -15,17 +15,16 @@ import bodyParser from "body-parser";
 dotenv.config();
 // import { port } from "./config/db.config";
 
-
 const app = express();
 
 app.use(
   cors({
-    origin: "https://koncohiling.vercel.app",
+    origin: "http://localhost:5173",
     credentials: true,
-  })
+  }),
 );
 
-const port = 3000
+const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

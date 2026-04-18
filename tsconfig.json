@@ -18,8 +18,11 @@
     "noEmit": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "baseUrl": "src"
+    "baseUrl": ".",
+    "paths": {
+      "@generated/*": ["./generated/*"]
+    }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "generated/**/*.ts"],
   "exclude": ["node_modules"]
 }

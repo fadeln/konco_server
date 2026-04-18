@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../config/prisma";
 import { Request, Response } from "express";
-
-const prisma = new PrismaClient();
 
 export const createOrder = async (
   req: Request,

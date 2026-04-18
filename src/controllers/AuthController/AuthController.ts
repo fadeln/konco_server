@@ -1,12 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../config/prisma";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import { ILoginRequest } from "../../types/types";
 import { generateAccessToken } from "../../utils/utils";
 import jwt from "jsonwebtoken";
 import { access_jwt_secret } from "../../config/db.config";
-
-const prisma = new PrismaClient();
 
 export const login = async (
   req: Request<{}, any, ILoginRequest>,
